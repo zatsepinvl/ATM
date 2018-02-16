@@ -9,9 +9,9 @@ public interface CardRepository {
     /**
      * @throws IllegalArgumentException if card isn't found
      */
-    Card getByCardNumber(long cardNumber);
+    Card findByCardNumber(long cardNumber);
 
-    Optional<Card> findByCardNumber(long cardNumber);
+    Optional<Card> findByCardNumberIfExists(long cardNumber);
 
     void save(Card card);
 }
