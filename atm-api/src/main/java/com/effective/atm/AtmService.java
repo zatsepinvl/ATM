@@ -1,7 +1,7 @@
 package com.effective.atm;
 
 /**
- * This interfaces represents basic operations over ATM
+ * This interface represents basic operations over ATM
  */
 public interface AtmService {
     boolean isCardExists(long cardNumber);
@@ -12,5 +12,5 @@ public interface AtmService {
      * @return user session to perform operation over the card
      * @throws IllegalStateException if card doesn't exist or is blocked
      */
-    AtmSession enter(long cardNumber);
+    AtmLoginSession enter(long cardNumber);
 }
