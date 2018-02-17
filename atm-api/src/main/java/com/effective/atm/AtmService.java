@@ -6,11 +6,14 @@ package com.effective.atm;
 public interface AtmService {
     boolean isCardExists(long cardNumber);
 
+    /**
+     * @throws IllegalArgumentException if card doesn't exist
+     */
     boolean isCardBlocked(long cardNumber);
 
     /**
      * @return user session to perform operation over the card
-     * @throws IllegalStateException if card doesn't exist or is blocked
+     * @throws IllegalArgumentException if card doesn't exist or is blocked
      */
-    AtmLoginSession enter(long cardNumber);
+    AtmSession enter(long cardNumber);
 }

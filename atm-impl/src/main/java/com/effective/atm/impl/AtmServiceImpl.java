@@ -1,17 +1,24 @@
 package com.effective.atm.impl;
 
-import com.effective.atm.AtmLoginSession;
 import com.effective.atm.AtmService;
+import com.effective.atm.AtmSession;
 import com.effective.atm.impl.repository.CardRepository;
+import com.effective.atm.impl.session.AtmSessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AtmServiceImpl implements AtmService {
 
     private final CardRepository cardRepository;
+    private final AtmSessionFactory atmSessionFactory;
 
-    public AtmServiceImpl(CardRepository cardRepository) {
+    public AtmServiceImpl(
+            CardRepository cardRepository,
+            AtmSessionFactory atmSessionFactory
+    ) {
         this.cardRepository = cardRepository;
+        this.atmSessionFactory = atmSessionFactory;
     }
 
     @Override
@@ -25,8 +32,10 @@ public class AtmServiceImpl implements AtmService {
     }
 
     @Override
-    public AtmLoginSession enter(long cardNumber) {
-        //ToDo
-        throw new UnsupportedOperationException("tbd");
+    public AtmSession enter(long cardNumber) {
+        if (!cardRepository.findByCardNumberIfExists(cardNumber).isPresent()) {
+            throw new IllegalArgumentException("Card [" + cardNumber + "] not found");
+        }
+        return atmSessionFactory.newAtmSession(cardNumber);
     }
 }
